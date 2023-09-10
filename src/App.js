@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import authorsData from './authorsData'; 
+import Post from './Post';
+import PostForm from './PostForm';
 
 function App() {
+  const [posts, setPosts] = useState([
+    {
+      author: authorsData[0],
+      image: 'https://via.placeholder.com/150',
+      text: 'Lorem ipsum dolor sit amet.',
+      likes: 0,
+      comments: 0,
+      shares: 0,
+    },
+  ]);
+
+  const addPost = (newPost) => {
+    setPosts([...posts, newPost]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Instagram Post Store</h1>
+      <PostForm authors={authorsData} onAddPost={addPost} />
+      {posts.map((post, index) => (
+        <Post key={index} post={post} />
+      ))}
     </div>
   );
 }
 
 export default App;
+
